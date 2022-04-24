@@ -1,0 +1,38 @@
+<%@ page pageEncoding="UTF-8" %>
+<h1>JoãoApp</h1>
+
+<% if(session.getAttribute("usuario")!= null){ %>
+    <form>
+        Usuario: <strong><%= session.getAttribute("usuario") %></strong>
+        <input type="submit" name="deslogar" value="Sair"/>
+    </form>
+<% } %>
+
+<hr><br>
+
+<%
+    if(request.getParameter("logar")!= null){
+        session.setAttribute("usuario", request.getParameter("usuario"));
+        response.sendRedirect(request.getRequestURI());
+    }
+    
+    if(request.getParameter("deslogar")!= null){
+        session.removeAttribute("usuario");
+        response.sendRedirect(request.getRequestURI());
+    }  
+%>
+
+<% if(session.getAttribute("usuario")!= null){ %>
+    <form>
+        <a href="about.jsp">Sobre</a> |
+        <a href="index.jsp">Index</a> |
+        <a href="loteria.jsp">Loteria</a>
+    </form>
+    
+<% }else{ %>
+    <form>
+        Log-in:
+        <input type="text" name="usuario"/>
+        <input type="submit" name="logar" value="Entrar"/>
+    </form>
+<% } %>
